@@ -11,6 +11,7 @@ Tier 1 is implemented and tested:
 - Quilt metadata discovery
 - Quilt dependency validation
 - Quilt and Fabric initialization entrypoints
+- mixin transformation of PatchQuilt-owned game classes
 - deterministic startup readiness and shutdown
 - Java runtime lifecycle controlled by Pumpkin
 

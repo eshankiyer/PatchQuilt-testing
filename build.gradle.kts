@@ -44,6 +44,6 @@ tasks.register<Exec>("conformanceTest") {
     }
     doLast {
         val marker = conformanceDirectory.get().file("lifecycle.marker").asFile
-        check(marker.readText() == "patchquilt_lifecycle_test=1.0.0")
+        check(marker.readText() == "patchquilt_lifecycle_test=1.0.0;mixin=mixed")
     }
 }
