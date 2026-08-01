@@ -1,0 +1,8 @@
+.gradle/
+.cache/
+build/
+*/build/
+run/
+target/
+crash-reports/
+quiltloader.log

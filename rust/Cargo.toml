@@ -1,0 +1,27 @@
+[package]
+name = "patchquilt"
+version = "0.1.0"
+edition = "2024"
+authors = ["PumpkinMC Contributors"]
+description = "Compatibility layer for running Quilt server mods on Pumpkin"
+license = "MIT"
+repository = "https://github.com/Pumpkin-MC/PatchQuilt"
+readme = "../README.md"
+keywords = ["minecraft", "pumpkin", "quilt", "mod-loader"]
+categories = ["game-development"]
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+pumpkin = { git = "https://github.com/Pumpkin-MC/Pumpkin.git", branch = "master", package = "pumpkin" }
+pumpkin-api-macros = { git = "https://github.com/Pumpkin-MC/Pumpkin.git", branch = "master", package = "pumpkin-api-macros" }
+tokio = { version = "1", features = ["io-util", "process", "sync", "time"] }
+tracing = "0.1"
+
+[lints.clippy]
+all = { level = "deny", priority = -1 }
+nursery = { level = "deny", priority = -1 }
+pedantic = { level = "deny", priority = -1 }
+cargo = { level = "deny", priority = -1 }
+multiple_crate_versions = "allow"
