@@ -14,6 +14,7 @@ pub mod constraint;
 pub mod discovery;
 pub mod metadata;
 pub mod resolve;
+pub mod solve;
 pub mod version;
 
 use std::path::Path;
@@ -63,6 +64,8 @@ impl LoadPlan {
 ///
 /// This is the end-to-end entry point equivalent to the discovery and solve
 /// phases of Quilt Loader, minus the class-loading it hands off to the JVM.
+/// Resolution uses the multi-version [`solve`] search, so several jars sharing a
+/// mod id resolve to a single chosen version rather than being rejected.
 ///
 /// # Errors
 /// Returns an error only when `mods_dir` cannot be read; malformed jars and
@@ -80,7 +83,7 @@ pub fn plan_mods(mods_dir: &Path, builtins: &[BuiltinMod]) -> Result<LoadPlan, S
             }),
         }
     }
-    let resolution = resolve::resolve(candidates, builtins);
+    let resolution = solve::solve(candidates, builtins);
     Ok(LoadPlan {
         resolution,
         malformed,

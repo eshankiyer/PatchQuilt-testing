@@ -76,11 +76,12 @@ the phases that are pure metadata logic, with no bytecode execution:
 - jar discovery over a mods directory, preferring `quilt.mod.json`
 - dependency resolution against builtins (`minecraft`, `quilt_loader`, `java`)
   with per-problem diagnostics for missing, unsatisfied, broken, and duplicate ids
+- multi-version selection: when several jars share a mod id, a complete
+  backtracking search picks the highest version consistent with every
+  `depends`/`breaks` clause, the same choice Quilt delegates to its Sat4j solver
 
 What still needs a bytecode runtime stays out of this crate: class loading,
-Mixin application, and entrypoint invocation. Multi-version selection (Quilt's
-Sat4j solve) is a documented follow-up; the resolver currently assumes one
-version per id, which covers the common single-candidate case exactly.
+Mixin application, and entrypoint invocation.
 
 ```bash
 cargo test --manifest-path loader/Cargo.toml
