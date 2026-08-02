@@ -1,0 +1,17 @@
+[package]
+name = "patchquilt-loader"
+version = "0.1.0"
+edition = "2024"
+description = "Pure-Rust Quilt Loader front end: metadata, versions, and dependency resolution without a JVM"
+license = "MIT"
+
+[dependencies]
+serde_json = "1"
+zip = { version = "2", default-features = false, features = ["deflate"] }
+
+[lints.rust]
+unsafe_op_in_unsafe_fn = "deny"
+
+[lints.clippy]
+all = { level = "deny", priority = -1 }
+pedantic = { level = "deny", priority = -1 }
