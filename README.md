@@ -62,6 +62,30 @@ cargo test --manifest-path supervisor/Cargo.toml
 cargo run --manifest-path supervisor/Cargo.toml -- ./pumpkin
 ```
 
+## Pure-Rust loader front end
+
+`loader/` is the JVM-free half of Quilt Loader rewritten in Rust. It reproduces
+the phases that are pure metadata logic, with no bytecode execution:
+
+- version parsing and comparison matching Quilt's semantic version model
+  (arbitrary component count, pre-release precedence, build metadata ignored)
+- the `versions` constraint grammar: `*`, exact, `>=`/`>`/`<=`/`<`/`=`, caret,
+  tilde, and `x`/`*` wildcards, as a single predicate or a union array
+- `quilt.mod.json` (QMJ schema 1) and `fabric.mod.json` parsing into one model,
+  including `depends`/`breaks`/`provides`, entrypoints, and mod-id validation
+- jar discovery over a mods directory, preferring `quilt.mod.json`
+- dependency resolution against builtins (`minecraft`, `quilt_loader`, `java`)
+  with per-problem diagnostics for missing, unsatisfied, broken, and duplicate ids
+
+What still needs a bytecode runtime stays out of this crate: class loading,
+Mixin application, and entrypoint invocation. Multi-version selection (Quilt's
+Sat4j solve) is a documented follow-up; the resolver currently assumes one
+version per id, which covers the common single-candidate case exactly.
+
+```bash
+cargo test --manifest-path loader/Cargo.toml
+```
+
 ## Conformance test
 
 ```bash
