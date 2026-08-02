@@ -48,6 +48,20 @@ Copy the native library into Pumpkin's `plugins` directory. Copy the contents of
 
 Set `PATCHQUILT_JAVA` to the Java executable if `java` is not available on `PATH`.
 
+## Rust supervisor prototype
+
+`supervisor/` contains the no-embedded-Java direction. It launches one Pumpkin
+child, attaches to that child with Linux `PTRACE_SEIZE`, resumes it, and relays
+its exit status. The supervisor never searches for or attaches to an unrelated
+process. This is an interposition boundary for the future Rust bridge; ptrace
+does not itself implement a JVM, Quilt Loader, Java bytecode execution, or
+Mixin semantics, so those compatibility layers remain explicit follow-up work.
+
+```bash
+cargo test --manifest-path supervisor/Cargo.toml
+cargo run --manifest-path supervisor/Cargo.toml -- ./pumpkin
+```
+
 ## Conformance test
 
 ```bash

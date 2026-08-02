@@ -2,6 +2,15 @@
 
 PatchQuilt is developed in compatibility stages. A stage advances only after its automated conformance tests and an isolated Pumpkin integration test pass on the NUC.
 
+## Stage 0: Rust process boundary
+
+- launch Pumpkin as a child of a Rust supervisor
+- attach only to that child with Linux `PTRACE_SEIZE`
+- keep lifecycle and exit propagation outside the server process
+- add syscall, symbol, and memory adapters only behind an explicit versioned boundary
+
+The supervisor is deliberately observation-only at first. ptrace can stop and inspect a process, but it cannot provide Quilt API compatibility without a Rust implementation of the required JVM, class loading, bytecode, and Mixin behavior. The existing loader remains the conformance reference while those pieces are replaced incrementally.
+
 ## Stage 1: Loader lifecycle
 
 Implemented in the initial patch:
