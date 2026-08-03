@@ -1,0 +1,31 @@
+[package]
+name = "mc-index"
+version = "0.1.0"
+edition = "2024"
+authors = ["PumpkinMC Contributors"]
+description = "Extracts a structured net.minecraft class/method/field index from a decompiled Minecraft server jar, for PatchQuilt Stage 4 (mapped Minecraft surfaces) and Pumpkin conformance checking"
+license = "MIT"
+repository = "https://github.com/eshankiyer/PatchQuilt-testing"
+readme = "README.md"
+keywords = ["minecraft", "decompile", "index", "quilt"]
+categories = ["parsing", "development-tools"]
+
+[lib]
+name = "mc_index"
+path = "src/lib.rs"
+
+[[bin]]
+name = "mc-index"
+path = "src/main.rs"
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+regex = "1"
+
+[lints.clippy]
+all = { level = "deny", priority = -1 }
+nursery = { level = "deny", priority = -1 }
+pedantic = { level = "deny", priority = -1 }
+cargo = { level = "deny", priority = -1 }
+multiple_crate_versions = "allow"
